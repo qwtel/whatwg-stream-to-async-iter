@@ -4,11 +4,7 @@
     "target": "ES5",
     "outDir": "cjs",
     "module": "CommonJS",
-    "esModuleInterop": true,
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "inlineSources": true,
+    "esModuleInterop": true
   },
   "include": [
     "index.ts"

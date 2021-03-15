@@ -22,7 +22,7 @@
     "test": "echo \"Error: no test specified\" && exit 0",
     "build": "npm run build:mjs & npm run build:cjs & wait",
     "build:mjs": "tsc -d -p tsconfig.json",
-    "build:cjs": "tsc -d -p tsconfig.cjs.json && sed -i '' -E 's/\\.js/.cjs/g' cjs/*.js && for f in cjs/*.js; do mv \"$f\" \"${f%.js}.cjs\"; done",
+    "build:cjs": "tsc -p tsconfig.cjs.json && sed -i '' -E 's/\\.js/.cjs/g' cjs/*.js && for f in cjs/*.js; do mv \"$f\" \"${f%.js}.cjs\"; done",
     "prepack": "npm run clean && npm run build"
   },
   "author": "Florian Klampfer <mail@qwtel.com> (https://qwtel.com/)",
