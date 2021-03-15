@@ -17,6 +17,7 @@
   },
   "types": "./index.d.ts",
   "scripts": {
+    "postinstall": "[[ -f index.js ]] || npm run build",
     "clean": "rm -f *.d.ts *.js *.js.map *.d.ts.map",
     "test": "echo \"Error: no test specified\" && exit 0",
     "build": "npm run build:mjs & npm run build:cjs & wait",
