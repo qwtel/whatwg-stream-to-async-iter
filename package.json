@@ -17,8 +17,8 @@
   },
   "types": "./index.d.ts",
   "scripts": {
-    "postinstall": "[[ -f index.js ]] || npm run build",
-    "clean": "rm -f *.d.ts *.js *.js.map *.d.ts.map",
+    "postinstall": "shx ls index.js >> /dev/null 2>&1 || npm run build",
+    "clean": "shx rm -rf *.d.ts *.js *.js.map *.d.ts.map cjs *.tgz",
     "test": "echo \"Error: no test specified\" && exit 0",
     "build": "npm run build:mjs & npm run build:cjs & wait",
     "build:mjs": "tsc -d -p tsconfig.json",
@@ -28,9 +28,9 @@
   "author": "Florian Klampfer <mail@qwtel.com> (https://qwtel.com/)",
   "license": "MIT",
   "devDependencies": {
+    "shx": "^0.3.3",
     "typescript": "^4.1.2"
   },
-  "dependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/qwtel/whatwg-stream-to-async-iter.git"
