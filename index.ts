@@ -15,7 +15,6 @@ export function asyncIterableToStreamTS<T>(iterable: AsyncIterable<T>): Readable
     const writer = writable.getWriter();
     try {
       for await (const x of iterable) {
-        // console.log(x);
         writer.write(x);
       }
     } finally { writer.close() }
@@ -28,7 +27,6 @@ export function asyncIterableToStreamRS<T>(iterable: AsyncIterable<T>): Readable
     async pull(controller) {
       try {
         for await (const x of iterable) {
-          // console.log(x)
           controller.enqueue(x);
         }
       } finally { controller.close() }
@@ -37,10 +35,7 @@ export function asyncIterableToStreamRS<T>(iterable: AsyncIterable<T>): Readable
 }
 
 const tryReadableStream = () => {
-  try { 
-    new ReadableStream({}); 
-    return true;
-  } catch { return false }
+  try { new ReadableStream({}) } catch { return false }
 };
 
 // Cloudflare Workers do not support the `ReadableStream` constructor:
