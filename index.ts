@@ -7,7 +7,9 @@ export async function* streamToAsyncIterable<T>(stream: ReadableStream<T>): Asyn
       ({ done, value } = await reader.read());
     }
     reader.releaseLock();
-  } catch (err) { reader.cancel(err) }
+  } catch (err) { 
+    reader.cancel(err);
+  }
 }
 
 export function asyncIterableToStreamTS<T>(iterable: AsyncIterable<T>): ReadableStream<T> {
@@ -15,9 +17,12 @@ export function asyncIterableToStreamTS<T>(iterable: AsyncIterable<T>): Readable
   (async () => {
     const writer = writable.getWriter();
     try {
-      for await (const x of iterable) writer.write(x);
+      for await (const x of iterable) 
+        writer.write(x);
       writer.close();
-    } catch (err) { writer.abort(err) }
+    } catch (err) { 
+      writer.abort(err);
+    }
   })();
   return readable;
 }
@@ -26,7 +31,8 @@ export function asyncIterableToStreamRS<T>(iterable: AsyncIterable<T>): Readable
   return new ReadableStream({
     async pull(controller) {
       try {
-        for await (const x of iterable) controller.enqueue(x);
+        for await (const x of iterable) 
+          controller.enqueue(x);
         controller.close();
       } catch (err) { 
         controller.error(err) 
