@@ -35,7 +35,7 @@ export function asyncIterableToStreamRS<T>(iterable: AsyncIterable<T>): Readable
 }
 
 const tryReadableStream = () => {
-  try { new ReadableStream({}) } catch { return false }
+  try { return new ReadableStream({}) } catch { return false }
 };
 
 // Cloudflare Workers do not support the `ReadableStream` constructor:
