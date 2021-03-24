@@ -1,8 +1,14 @@
 {
   "compilerOptions": {
-    "lib": ["ES2020", "ES2018.AsyncIterable", "WebWorker"],
-    "target": "ES5",
+    "lib": [
+      "ES2020",
+      "ES2018.AsyncIterable",
+      "WebWorker"
+    ],
+    "target": "ES2015",
+    "moduleResolution": "Node",
     "outDir": "cjs",
+    "importHelpers": true,
     "module": "CommonJS",
     "esModuleInterop": true
   },
