@@ -12,7 +12,7 @@ export async function* streamToAsyncIterable<T>(stream: ReadableStream<T>): Asyn
   }
 }
 
-export function asyncIterableToStreamTS<T>(iterable: AsyncIterable<T>): ReadableStream<T> {
+function asyncIterableToStreamTS<T>(iterable: AsyncIterable<T>): ReadableStream<T> {
   const { readable, writable } = new TransformStream<T, T>();
   (async () => {
     const writer = writable.getWriter();
@@ -27,7 +27,7 @@ export function asyncIterableToStreamTS<T>(iterable: AsyncIterable<T>): Readable
   return readable;
 }
 
-export function asyncIterableToStreamRS<T>(iterable: AsyncIterable<T>): ReadableStream<T> {
+function asyncIterableToStreamRS<T>(iterable: AsyncIterable<T>): ReadableStream<T> {
   return new ReadableStream({
     async pull(controller) {
       try {
@@ -42,7 +42,7 @@ export function asyncIterableToStreamRS<T>(iterable: AsyncIterable<T>): Readable
 }
 
 const tryReadableStream = () => {
-  try { return new ReadableStream({}) } catch { return false }
+  try { return !!new ReadableStream({}) } catch { return false }
 };
 
 // Cloudflare Workers do not support the `ReadableStream` constructor:
