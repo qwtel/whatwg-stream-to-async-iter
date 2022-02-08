@@ -49,3 +49,8 @@ const tryReadableStream = () => {
 export const asyncIterableToStream = tryReadableStream()
   ? asyncIterableToStreamRS
   : asyncIterableToStreamTS;
+
+export {
+  streamToAsyncIterable as streamToAsyncIter,
+  asyncIterableToStream as asyncIterToStream,
+}
