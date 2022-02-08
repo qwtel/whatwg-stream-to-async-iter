@@ -5,16 +5,15 @@
       "ES2018.AsyncIterable",
       "WebWorker"
     ],
-    "target": "ES2018",
+    "target": "ES2015",
     "moduleResolution": "Node",
-    "outDir": ".",
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
-    "inlineSources": true,
+    "outDir": "cjs",
+    "importHelpers": true,
+    "module": "CommonJS",
+    "esModuleInterop": true
   },
   "include": [
-    "index.ts",
+    "index.ts"
   ],
   "exclude": [],
 }

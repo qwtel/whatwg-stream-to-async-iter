@@ -2,32 +2,36 @@
   "name": "whatwg-stream-to-async-iter",
   "version": "0.4.0",
   "type": "module",
-  "source": "src/index.ts",
+  "main": "cjs/index.cjs",
+  "module": "index.js",
+  "types": "index.d.ts",
   "exports": {
-    "require": "./dist/index.cjs",
-    "default": "./dist/index.modern.js"
+    ".": {
+      "import": "./index.js",
+      "require": "./cjs/index.cjs"
+    }
   },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.module.js",
-  "unpkg": "./dist/index.umd.js",
   "files": [
-    "src",
-    "dist",
-    "tsconfig.json"
+    "index*",
+    "cjs",
+    "tsconfig*.json"
   ],
-  "types": "./index.d.ts",
   "scripts": {
-    "clean": "shx rm -rf dist index.d.ts* *.tgz",
+    "postinstall": "shx ls index.js >> /dev/null 2>&1 || npm run build",
+    "clean": "shx rm -rf cjs *.d.ts *.js *.js.map *.d.ts.map *.tgz",
     "test": "echo \"Error: no test specified\" && exit 0",
-    "build": "microbundle",
-    "dev": "microbundle watch",
+    "build": "npm run build:mjs & npm run build:cjs & wait",
+    "build:mjs": "tsc -p tsconfig.json",
+    "build:cjs": "tsc -p tsconfig.cjs.json && npm run sed && npm run mv",
+    "sed": "shx sed -i 's/\\.(.*)\\.js/\\.$1\\.cjs/g' cjs/*.js > /dev/null ",
+    "mv": "for f in cjs/*.js; do shx mv \"$f\" \"${f%.js}.cjs\"; done",
     "prepack": "npm run clean && npm run build"
   },
   "author": "Florian Klampfer <mail@qwtel.com> (https://qwtel.com/)",
   "license": "MIT",
   "devDependencies": {
-    "microbundle": "^0.14.2",
-    "shx": "^0.3.3"
+    "shx": "^0.3.3",
+    "typescript": "^4.3.2"
   },
   "repository": {
     "type": "git",
@@ -36,5 +40,8 @@
   "bugs": {
     "url": "https://github.com/qwtel/whatwg-stream-to-async-iter/issues"
   },
-  "homepage": "https://github.com/qwtel/whatwg-stream-to-async-iter#readme"
+  "homepage": "https://github.com/qwtel/whatwg-stream-to-async-iter#readme",
+  "dependencies": {
+    "tslib": "^2.3.1"
+  }
 }
