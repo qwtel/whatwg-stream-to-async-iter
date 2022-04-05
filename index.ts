@@ -3,7 +3,7 @@ export async function* streamToAsyncIterable<T>(stream: ReadableStream<T>): Asyn
   try {
     let { done, value } = await reader.read();
     while (!done) {
-      yield value;
+      yield value as T;
       ({ done, value } = await reader.read());
     }
     reader.releaseLock();
