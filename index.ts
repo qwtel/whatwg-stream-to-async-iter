@@ -1,3 +1,5 @@
+export type ForOfAwaitable<T> = Iterable<T> | AsyncIterable<T>;
+
 export async function* streamToAsyncIterable<T>(stream: ReadableStream<T>): AsyncIterableIterator<T> {
   const reader = stream.getReader();
   try {
@@ -12,7 +14,7 @@ export async function* streamToAsyncIterable<T>(stream: ReadableStream<T>): Asyn
   }
 }
 
-function asyncIterableToStreamTS<T>(iterable: AsyncIterable<T>): ReadableStream<T> {
+function asyncIterableToStreamTS<T>(iterable: ForOfAwaitable<T>): ReadableStream<T> {
   const { readable, writable } = new TransformStream<T, T>();
   (async () => {
     const writer = writable.getWriter();
@@ -27,7 +29,7 @@ function asyncIterableToStreamTS<T>(iterable: AsyncIterable<T>): ReadableStream<
   return readable;
 }
 
-function asyncIterableToStreamRS<T>(iterable: AsyncIterable<T>): ReadableStream<T> {
+function asyncIterableToStreamRS<T>(iterable: ForOfAwaitable<T>): ReadableStream<T> {
   return new ReadableStream({
     async pull(controller) {
       try {
@@ -46,7 +48,7 @@ const tryReadableStream = () => {
 };
 
 // Cloudflare Workers do not support the `ReadableStream` constructor:
-export const asyncIterableToStream = tryReadableStream()
+export const asyncIterableToStream: <T>(iterable: ForOfAwaitable<T>) => ReadableStream<T> = tryReadableStream()
   ? asyncIterableToStreamRS
   : asyncIterableToStreamTS;
 
