@@ -8,6 +8,7 @@
     "target": "ES2018",
     "moduleResolution": "Node",
     "outDir": ".",
+    "strict": true,
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
