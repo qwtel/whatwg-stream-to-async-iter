@@ -1,5 +1,5 @@
 export type ForAwaitable<T> = Iterable<T> | AsyncIterable<T>;
-export { ForAwaitable as ForOfAwaitable }
+export type { ForAwaitable as ForOfAwaitable }
 
 export type ForAwaitableIterator<T> = AsyncIterator<T> | Iterator<T>
 
