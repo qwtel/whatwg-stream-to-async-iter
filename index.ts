@@ -24,9 +24,9 @@ export async function* streamToAsyncIterable<T>(stream: ReadableStream<T>): Asyn
       yield value as T;
       ({ done, value } = await reader.read());
     }
-    reader.releaseLock();
+    reader.releaseLock(); // FIXME: is this necessary?
   } catch (err) {
-    reader.cancel(err);
+    throw err;
   }
 }
 
